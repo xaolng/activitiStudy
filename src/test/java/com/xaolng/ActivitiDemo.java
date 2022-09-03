@@ -1,6 +1,8 @@
 package com.xaolng;
 
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricActivityInstanceQuery;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -79,8 +81,8 @@ public class ActivitiDemo {
         //获取 seervice
         TaskService taskService = processEngine.getTaskService();
         //根据任务 id 完成任务
-//        taskService.complete("2505");
-        //获取 jerry 对应的任务,并完成
+//        taskService.complete("10005");
+//        获取 jerry 对应的任务,并完成
 //        Task task = taskService.createTaskQuery()
 //                .processDefinitionKey("myEvection")
 //                .taskAssignee("jerry")
@@ -169,7 +171,7 @@ public class ActivitiDemo {
         //获取 RepositoryService
         RepositoryService repositoryService = processEngine.getRepositoryService();
         //通过部署 id 来删除流程部署信息
-        String deployment = "2501";
+        String deployment = "15001";
         repositoryService.deleteDeployment(deployment,true);
     }
 
@@ -212,5 +214,31 @@ public class ActivitiDemo {
         bpmnInput.close();
         fileOutputStream.close();
         fileOutputStream2.close();
+    }
+    /**
+     * 查看历史信息
+     */
+    @Test
+    public void findHistoryInfo(){
+        //获取引擎
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+        //拿到 HistoryService
+        HistoryService historyService = processEngine.getHistoryService();
+        //查询 actinst 表
+        HistoricActivityInstanceQuery instanceQuery = historyService.createHistoricActivityInstanceQuery();
+        instanceQuery.processInstanceId("10001");
+        //增加排序操作
+        instanceQuery.orderByHistoricActivityInstanceStartTime().asc();
+        //查询所有内容
+        List<HistoricActivityInstance> list = instanceQuery.list();
+        for (HistoricActivityInstance hi : list) {
+            System.out.println("" + hi.getActivityId());
+            System.out.println("" + hi.getActivityName());
+            System.out.println("" + hi.getProcessDefinitionId());
+            System.out.println("" + hi.getProcessInstanceId());
+            System.out.println("-------------------------------");
+
+        }
+        //输出
     }
 }

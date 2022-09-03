@@ -26,7 +26,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql:///activiti" />
         <property name="username" value="root" />
-        <property name="password" value="******" />
+        <property name="password" value="123456" />
         <property name="maxActive" value="3" />
         <property name="maxIdle" value="1" />
     </bean>
