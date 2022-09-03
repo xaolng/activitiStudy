@@ -16,7 +16,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 <!--        <property name="jdbcDriver" value="com.mysql.jdbc.Driver"/>-->
 <!--        <property name="jdbcUrl" value="jdbc:mysql:///activiti"/>-->
 <!--        <property name="jdbcUsername" value="root"/>-->
-<!--        <property name="jdbcPassword" value="123456"/>-->
+<!--        <property name="jdbcPassword" value="****"/>-->
 <!--        &lt;!&ndash; activiti数据库表处理策略 true 如果数据库中存在直接使用，如果不存在则创建&ndash;&gt;-->
 <!--        <property name="databaseSchemaUpdate" value="true"/>-->
 <!--    </bean>-->
