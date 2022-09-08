@@ -171,7 +171,7 @@ public class ActivitiDemo {
         //获取 RepositoryService
         RepositoryService repositoryService = processEngine.getRepositoryService();
         //通过部署 id 来删除流程部署信息
-        String deployment = "15001";
+        String deployment = "52501";
         repositoryService.deleteDeployment(deployment,true);
     }
 
