@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * @author xaolng
  * @date: 2022/9/8 15:00
- * @description:
+ * @description:  测试任务完成时添加流程变量
  */
-public class TestVariables1 {
+public class TestVariables2Complete {
 
     /**
      * 部署流程
@@ -27,7 +27,7 @@ public class TestVariables1 {
         RepositoryService repositoryService = processEngine.getRepositoryService();
 
         Deployment deploy = repositoryService.createDeployment()
-                .name("出差申请流程-variables")
+                .name("出差申请流程-variables-complete")
                 .addClasspathResource("bpmn/evection-global.bpmn")
                 .deploy();
         System.out.println("流程部署id: " + deploy.getId());
@@ -47,15 +47,15 @@ public class TestVariables1 {
         //设置流程变量
         //流程变量的 Map
         Map<String,Object> variablesMap = new HashMap<>();
-        Evection evection = new Evection();
-        evection.setNum(3d);
-        variablesMap.put("evection",evection);
+//        Evection evection = new Evection();
+//        evection.setNum(3d);
+//        variablesMap.put("evection",evection);
 
         //设定任务的负责人
-        variablesMap.put("assignee0","李四");
-        variablesMap.put("assignee1","李经理");
-        variablesMap.put("assignee2","王总经理");
-        variablesMap.put("assignee3","赵财务");
+        variablesMap.put("assignee0","李四3");
+        variablesMap.put("assignee1","李经理3");
+        variablesMap.put("assignee2","王总经理3");
+        variablesMap.put("assignee3","赵财务3");
 
 
         //启动流程
@@ -79,21 +79,39 @@ public class TestVariables1 {
         String key = "myEvectionGlobal";
 
         //任务负责人
-//        String assignee = "李四";
-        String assignee = "李经理";
-//        String assignee = "赵财务";
-
+//        String assignee = "李四3";
+        String assignee = "李经理3";
+//        String assignee = "王总经理3";
+//        String assignee = "赵财务3";
+        Evection evection = new Evection();
+        evection.setNum(2d);//出差天数
+        Map<String,Object> map = new HashMap<>();
+        map.put("evection",evection);
         //创建查询任务
-
         Task task = taskService.createTaskQuery()
                 .processDefinitionKey(key)
                 .taskAssignee(assignee)
                 .singleResult();
 
         if (task != null){
-            //完成任务
-            taskService.complete(task.getId());
+            //完成任务 并设置流程变量
+            taskService.complete(task.getId(),map);
         }
     }
 
+    /**
+     * 通过流程实例 id 设置流程变量
+     */
+    public void setGlobalVariableByExecutionId(){
+        String executionId = "";
+        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+        Evection evection = new Evection();
+        evection.setNum(3d);
+        //通过流程实例 id 设置流程变量
+        runtimeService.setVariable(executionId,"evectoin",evection);
+        //一次设置多个值
+//        runtimeService.setVariables(executionId,variables);
+    }
 }
